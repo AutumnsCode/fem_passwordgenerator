@@ -89,4 +89,4 @@ I want to keep practising the pattern of isolating logic into custom hooks — `
 
 ## Author
 
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/AutumnsCode)
+- Frontend Mentor - [@AutumnsCode](https://www.frontendmentor.io/profile/AutumnsCode)
