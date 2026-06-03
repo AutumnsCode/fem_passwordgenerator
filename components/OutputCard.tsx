@@ -40,7 +40,7 @@ const OutputCard = ({ value }: { value: OutputType }) => {
         <Icon
           src={copyIcon.src}
           alt="Copy to clipboard"
-          className="w-5.25 h-6 max-sm:w-4.5 max-sm:h-5 bg-green-200 group-disabled:bg-gray-600" />
+          className="w-5.25 h-6 max-sm:w-4.5 max-sm:h-5 bg-green-200 group-hover:bg-white group-active:bg-green-300 group-disabled:bg-gray-600" />
       </button>
     </section>
   )

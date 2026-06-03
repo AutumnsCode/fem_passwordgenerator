@@ -17,18 +17,85 @@
   --container-xl: 33.75rem;
 }
 
-.text-preset-1 {
-  @apply text-3xl/6 font-bold
+input[type=checkbox]:checked {
+  background-image: url('/icon-check.svg');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.text-preset-2 {
-  @apply text-2xl/8 font-bold
-}
+input[type=range] {
+  appearance: none;
+  width: 100%;
+  background: transparent;
 
-.text-preset-3 {
-  @apply text-lg/6 font-bold
-}
+  &:focus {
+    outline: none;
 
-.text-preset-4 {
-  @apply text-base/5 font-bold
+    &::-webkit-slider-thumb {
+      background-color: var(--color-gray-850);
+      border-color: var(--color-green-200);
+    }
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    margin-top: -0.45rem;
+    width: 1.5rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--color-gray-200);
+    cursor: pointer;
+    border: 2px solid var(--color-gray-200);
+  }
+
+  &::-moz-range-thumb {
+    width: 1.5rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--color-gray-200);
+    cursor: pointer;
+    border: 2px solid var(--color-gray-200);
+  }
+
+  &::-ms-thumb {
+    width: 1.5rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--color-gray-200);
+    cursor: pointer;
+    border: 2px solid var(--color-gray-200);
+  }
+
+
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 0.5rem;
+    cursor: pointer;
+    background: linear-gradient(
+      to right, 
+      var(--color-green-200) var(--fill, 0%),
+      var(--color-gray-850) var(--fill, 0%)
+      );
+    border-radius: 8px;
+  }
+
+  &::-ms-track {
+    width: 100%;
+    height: 0.5rem;
+    cursor: pointer;
+    background: linear-gradient(to right,
+        var(--color-green-200) var(--fill, 0%),
+        var(--color-gray-850) var(--fill, 0%));
+    border-radius: 8px;
+  }
+
+  &::-moz-range-track {
+    width: 100%;
+    height: 0.5rem;
+    cursor: pointer;
+    background: linear-gradient(to right,
+        var(--color-green-200) var(--fill, 0%),
+        var(--color-gray-850) var(--fill, 0%));
+    border-radius: 8px;
+  }
 }
