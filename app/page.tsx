@@ -6,19 +6,27 @@ import OutputCard from "@/components/OutputCard";
 import RangeCard from "@/components/RangeCard";
 import { CheckItems } from "@/lib/constants";
 import { usePasswordGenerator } from "@/lib/hooks/usePasswordGenerator";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ArrowRight from "./assets/images/icon-arrow-right.svg"
 import { StrengthContainer } from "@/components/StrengthContainer";
 
 export default function Home() {
+  // Inverts the button color scheme briefly to simulate a "pressed" state --
+  // CSS :active alone isn't reliable for keyboard/programmatic triggers.
   const [active, setActive] = useState(false)
+  // Stored so we can cancel the reset if the component unmounts before the
+  // timer fires, avoiding a state-update-on-unmounted-component warning.
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const { password, errorMsg, length, setLength, options, handleChange, generatePassword, strength} = usePasswordGenerator()
-  
+
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current) }, [])
+
   const handleSubmit = () => {
     generatePassword()
     // Briefly flip the button style to give visual click feedback, then revert.
     setActive(true)
-    setTimeout(() => setActive(false), 200)
+    if (timerRef.current) clearTimeout(timerRef.current)
+    timerRef.current = setTimeout(() => setActive(false), 200)
   }
 
   return (

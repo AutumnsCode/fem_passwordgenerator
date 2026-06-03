@@ -1,17 +1,24 @@
 "use client"
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Icon from './Icon'
 import copyIcon from '@/app/assets/images/icon-copy.svg'
 
 const OutputCard = ({ value }: { value: OutputType }) => {
   const [isCopied, setIsCopied] = useState(false)
+  // Stored so we can cancel the reset if the component unmounts before the timer
+  // fires (avoids update-after-unmount warning) and to prevent timer stacking on
+  // rapid clicks.
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current) }, [])
 
   const handleCopy = async () => {
     if (!value) return
 
     await navigator.clipboard.writeText(value)
     setIsCopied(true)
-    setTimeout(() => setIsCopied(false), 1000)
+    if (timerRef.current) clearTimeout(timerRef.current)
+    timerRef.current = setTimeout(() => setIsCopied(false), 1000)
   }
 
   return (
@@ -32,6 +39,7 @@ const OutputCard = ({ value }: { value: OutputType }) => {
         onClick={handleCopy}
         disabled={!value}
       >
+        {/* hidden/block rather than conditional render avoids layout shift on the icon */}
         <span
           className={`uppercase font-bold sm:text-lg/6 ${isCopied ? "block" : "hidden"}`}
         >

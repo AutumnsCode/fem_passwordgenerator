@@ -9,6 +9,7 @@ export const usePasswordGenerator = () => {
   const [length, setLength] = useState(0)
   const [errorMsg, setErrorMsg] = useState("")
   const [password, setPassword] = useState("")
+  // null = no password generated yet; keeps the strength indicator hidden on first render.
   const [strength, setStrength] = useState<0 | 1 | 2 | 3 | null>(null)
   const [options, setOptions] = useState({
     uppercase: true,
@@ -22,10 +23,12 @@ export const usePasswordGenerator = () => {
   }
 
   const generatePassword = () => {
+    // Clear both before validation so stale output is never shown alongside a new error.
     setErrorMsg("")
     setStrength(null)
     const enabledOptions = Object.entries(options).filter(([,enabled]) => enabled)
     
+    // Validate length before options so the most immediately actionable error shows first.
     if (length === 0) {
       setPassword("")
       setErrorMsg("The Password must be at least 1 character long.")
@@ -38,6 +41,8 @@ export const usePasswordGenerator = () => {
       return
     }
 
+    // Each enabled group must contribute at least one character, so length must
+    // be >= the number of enabled groups.
     if (length < enabledOptions.length) {
       setPassword("")
       setErrorMsg(`Your password must be at least ${enabledOptions.length} characters long because you selected ${enabledOptions.length} character groups.`)
@@ -48,18 +53,18 @@ export const usePasswordGenerator = () => {
 
     // Pick one random char from each selected group so every group is guaranteed
     // to appear at least once in the final password before shuffling.
-    const guranteedCharacter = enabledOptions.map(([key]) => {
+    const guaranteedCharacters = enabledOptions.map(([key]) => {
       const chars = CHARS[key as OptionKey]
       return getRandomChar(chars)
     })
 
     // Fill the remaining slots from the combined character pool.
     const restCharacter = Array.from(
-      { length: length - guranteedCharacter.length },
+      { length: length - guaranteedCharacters.length },
       () => getRandomChar(allCharacter)
     )
 
-    const newPassword = shuffleCharacter([...guranteedCharacter, ...restCharacter]).join("")
+    const newPassword = shuffleCharacter([...guaranteedCharacters, ...restCharacter]).join("")
 
     const newStrength = calculateStrength(options, length)
     

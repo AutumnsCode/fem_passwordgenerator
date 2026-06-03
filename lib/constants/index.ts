@@ -4,6 +4,8 @@ export const MIN = 0
 // Maximum password length supported by the slider.
 export const MAX = 18
 
+// Each label must match a key in the `options` object in usePasswordGenerator
+// so CheckCard can look up the checkbox state by label.
 export const CheckItems : CheckItemsType[] = [
   {
     label: "uppercase",
@@ -11,7 +13,7 @@ export const CheckItems : CheckItemsType[] = [
   },
   {
     label: "lowercase",
-    description: "uppercase letter"
+    description: "lowercase letter"
   },
   {
     label: "digits",
@@ -23,6 +25,8 @@ export const CheckItems : CheckItemsType[] = [
   },
 ]
 
+// Character pools keyed by option name. Order here determines which group is
+// guaranteed first when building a password in usePasswordGenerator.
 export const CHARS: CharsType = {
   uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   lowercase: 'abcdefghijklmnopqrstuvwxyz',
@@ -30,6 +34,7 @@ export const CHARS: CharsType = {
   symbols: '!@#$%^&*()_+-=[]{};\':"|,.<>/?`~\\',
 }
 
+// Index 0–3 matches the strength score returned by calculateStrength.
 export const STRENGTH_LABELS = [
   "too weak!",
   "weak",
@@ -45,6 +50,7 @@ export const STRENGTH_COLORS = {
 }
 
 // Number of filled bars shown in the strength indicator for each strength level.
+// Always at least 1 so the bar strip is never completely empty.
 export const STRENGTH_BARS = {
   0: 1,
   1: 2,
