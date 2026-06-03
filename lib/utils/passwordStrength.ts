@@ -15,6 +15,8 @@ const calculateEntropy = (length: number, charsetSize: number): number => {
 }
 
 
+// Thresholds follow common security guidelines: <28 bits = too weak, <50 = weak,
+// <75 = medium, ≥75 = strong (approx. brute-force resistance levels).
 export const calculateStrength = (options: Record<OptionKey, boolean>, passwordLength: number): 0 | 1 | 2 | 3 => {
   const cs = getCharsetSize(options)
   const bits = calculateEntropy(passwordLength, cs)
@@ -22,5 +24,5 @@ export const calculateStrength = (options: Record<OptionKey, boolean>, passwordL
   if (bits < 28) return 0
   if (bits < 50) return 1
   if (bits < 75) return 2
-   return 3
+  return 3
 }

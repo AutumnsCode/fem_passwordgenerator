@@ -46,12 +46,14 @@ export const usePasswordGenerator = () => {
 
     const allCharacter = enabledOptions.map(([key]) => CHARS[key as OptionKey]).join("")
 
+    // Pick one random char from each selected group so every group is guaranteed
+    // to appear at least once in the final password before shuffling.
     const guranteedCharacter = enabledOptions.map(([key]) => {
       const chars = CHARS[key as OptionKey]
-
       return getRandomChar(chars)
     })
 
+    // Fill the remaining slots from the combined character pool.
     const restCharacter = Array.from(
       { length: length - guranteedCharacter.length },
       () => getRandomChar(allCharacter)

@@ -16,6 +16,7 @@ export default function Home() {
   
   const handleSubmit = () => {
     generatePassword()
+    // Briefly flip the button style to give visual click feedback, then revert.
     setActive(true)
     setTimeout(() => setActive(false), 200)
   }
