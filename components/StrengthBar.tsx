@@ -6,7 +6,7 @@ export const StrengthBar = ({ strength }: StrengthContainerProps) => {
   const color = strength !== null ? STRENGTH_COLORS[strength] : ""
   const filledBars = strength !== null ? STRENGTH_BARS[strength] : 0
   return (
-    <ul className='flex gap-2'>
+    <ul className='flex gap-2' aria-hidden="true">
       {[0, 1, 2, 3].map(i => (
         <li
           key={`${name}-${i}`}

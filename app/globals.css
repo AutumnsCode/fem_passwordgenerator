@@ -30,10 +30,19 @@ input[type=range] {
 
   &:focus {
     outline: none;
+  }
 
+  &:focus-visible {
     &::-webkit-slider-thumb {
       background-color: var(--color-gray-850);
       border-color: var(--color-green-200);
+      box-shadow: 0 0 0 3px var(--color-green-200);
+    }
+
+    &::-moz-range-thumb {
+      background-color: var(--color-gray-850);
+      border-color: var(--color-green-200);
+      box-shadow: 0 0 0 3px var(--color-green-200);
     }
   }
 
